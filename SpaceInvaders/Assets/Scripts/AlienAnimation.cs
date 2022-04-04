@@ -9,11 +9,13 @@ public class AlienAnimation : MonoBehaviour
     public float AnimationSpeed = .6f;
     public float ExplosionForce = 100f;
     public float ExplosionSeconds = 6f;
+    public GameObject ExplosionPrefab;
 
     private Transform[] AnimationFrames;
     private int FrameCount;
     private int FrameShown = -1;
     private bool Dead = false;
+    
 
     // Start is called before the first frame update
     void Start()
@@ -28,12 +30,15 @@ public class AlienAnimation : MonoBehaviour
         if (Dead == false)
         {
             ShowFrame(((int)(Time.time * AnimationSpeed) % FrameCount));
+        }
+    }
 
-            // todo - remove this 
-            if (Time.time > 2 && this.gameObject.name == "Alien3 A")
-            {
-                Die();
-            }
+    private void OnTriggerEnter(Collider other)
+    {
+        Debug.Log(other.tag);
+        if (other.tag == "Bullet")
+        {
+            Die();
         }
     }
 
@@ -57,7 +62,7 @@ public class AlienAnimation : MonoBehaviour
         FrameCount = AnimationFrames.Length;
     }
 
-    async void Die()
+    void Die()
     {
         if (!Dead)
         {
@@ -69,8 +74,10 @@ public class AlienAnimation : MonoBehaviour
                 pixel.ExplodeFrom(explosionPoint, ExplosionForce, ExplosionSeconds);
             }
 
-            await Task.Delay((int)(ExplosionSeconds * 1000f));
-            GameObject.Destroy(this.gameObject);
+            Instantiate(ExplosionPrefab, transform.position, Quaternion.identity);
+            GetComponent<BoxCollider>().enabled = false;
+
+            GameObject.Destroy(this.gameObject, ExplosionSeconds);
         }
     }
 }

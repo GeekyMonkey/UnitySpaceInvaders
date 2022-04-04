@@ -50,6 +50,8 @@ MonoBehaviour:
   AnimationSpeed: 0.5
   ExplosionForce: 250
   ExplosionSeconds: 6
+  ExplosionPrefab: {fileID: 8358695683328826369, guid: eb37819caa33f174ea339c3f7f6e71f0,
+    type: 3}
 --- !u!65 &-6319248856283414908
 BoxCollider:
   m_ObjectHideFlags: 0
