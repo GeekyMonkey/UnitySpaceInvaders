@@ -30,7 +30,7 @@ public class AlienAnimation : MonoBehaviour
             ShowFrame(((int)(Time.time * AnimationSpeed) % FrameCount));
 
             // todo - remove this 
-            if (Time.time > 2 && this.gameObject.name == "Alien3")
+            if (Time.time > 2 && this.gameObject.name == "Alien3 A")
             {
                 Die();
             }
@@ -44,9 +44,8 @@ public class AlienAnimation : MonoBehaviour
             FrameShown = frame;
             for (int i = 0; i < FrameCount; i++)
             {
-                bool visible = i == frame;
-                // Debug.Log("Frame " + i + " vis:" + visible);
-                AnimationFrames[i].gameObject.SetActive(visible);
+                bool isFrameVisible = i == frame;
+                AnimationFrames[i].gameObject.SetActive(isFrameVisible);
             }
         }
     }
@@ -63,12 +62,11 @@ public class AlienAnimation : MonoBehaviour
         if (!Dead)
         {
             Dead = true;
-            var pixels = this.GetComponentsInChildren<Rigidbody>(true);
-            Transform explosionPoint = transform.Find("ExplosionPoint");
+            var pixels = this.GetComponentsInChildren<PixelScript>(false);
+            Vector3 explosionPoint = transform.Find("ExplosionPoint").position;
             foreach (var pixel in pixels)
             {
-                pixel.isKinematic = false;
-                pixel.AddExplosionForce(ExplosionForce, explosionPoint.position, 8, 5f, ForceMode.Impulse);
+                pixel.ExplodeFrom(explosionPoint, ExplosionForce, ExplosionSeconds);
             }
 
             await Task.Delay((int)(ExplosionSeconds * 1000f));

@@ -48,7 +48,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   AnimationSpeed: 0.5
-  ExplosionForce: 50
+  ExplosionForce: 250
   ExplosionSeconds: 6
 --- !u!65 &-6319248856283414908
 BoxCollider:
