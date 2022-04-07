@@ -230,6 +230,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6209954f6e7140b428bf1f541f0c534f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  LightLifeSeconds: 0.25
 --- !u!1 &8358695683328826369
 GameObject:
   m_ObjectHideFlags: 0
@@ -242,7 +243,7 @@ GameObject:
   - component: {fileID: 8977331103851106548}
   - component: {fileID: 5139185423407578178}
   m_Layer: 0
-  m_Name: Explosion
+  m_Name: ExplosionFlash
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

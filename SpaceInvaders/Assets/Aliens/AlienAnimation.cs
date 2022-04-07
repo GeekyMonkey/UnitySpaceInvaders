@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 
 public class AlienAnimation : MonoBehaviour
 {
-    public float AnimationSpeed = .6f;
     public float ExplosionForce = 100f;
     public float ExplosionSeconds = 6f;
     public GameObject ExplosionPrefab;
@@ -15,7 +14,7 @@ public class AlienAnimation : MonoBehaviour
     private int FrameCount;
     private int FrameShown = -1;
     private bool Dead = false;
-    
+
 
     // Start is called before the first frame update
     void Start()
@@ -29,7 +28,7 @@ public class AlienAnimation : MonoBehaviour
     {
         if (Dead == false)
         {
-            ShowFrame(((int)(Time.time * AnimationSpeed) % FrameCount));
+            ShowFrame(GameManger.instance.AlienAnimationFrame % FrameCount);
         }
     }
 
@@ -38,7 +37,7 @@ public class AlienAnimation : MonoBehaviour
         Debug.Log(other.tag);
         if (other.tag == "Bullet")
         {
-            Die();
+            Die(other.transform.position);
         }
     }
 
@@ -62,13 +61,15 @@ public class AlienAnimation : MonoBehaviour
         FrameCount = AnimationFrames.Length;
     }
 
-    void Die()
+    void Die(Vector3 bulletPosition)
     {
         if (!Dead)
         {
             Dead = true;
+            GameManger.instance.AlienDied();
+            
             var pixels = this.GetComponentsInChildren<PixelScript>(false);
-            Vector3 explosionPoint = transform.Find("ExplosionPoint").position;
+            Vector3 explosionPoint = new Vector3(bulletPosition.x, bulletPosition.y, transform.Find("ExplosionPoint").position.z);
             foreach (var pixel in pixels)
             {
                 pixel.ExplodeFrom(explosionPoint, ExplosionForce, ExplosionSeconds);
