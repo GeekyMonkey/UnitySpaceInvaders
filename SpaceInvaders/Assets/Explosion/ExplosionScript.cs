@@ -6,7 +6,7 @@ public class ExplosionScript : MonoBehaviour
 {
     void Start()
     {
-        Destroy(gameObject, 0.1f);
+        Destroy(gameObject, 3.0f);
     }
 
 }
