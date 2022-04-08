@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class GameManger : MonoBehaviour
@@ -9,7 +10,7 @@ public class GameManger : MonoBehaviour
 
     public int AlienCount = 50;
     public int AlienInitalCount = 50;
-            
+
     internal float AnimationSpeedRatio = 0;
 
     private float AlienAnimationFPS = 3f;
@@ -17,6 +18,8 @@ public class GameManger : MonoBehaviour
     public float AlienAnimationFPSMax = 9f;
     internal int AlienAnimationFrame = 0;
     private float AlienAnimationLastTime = 0;
+
+    private Dictionary<string, AlienAnimation> Aliens = new Dictionary<string, AlienAnimation>();
 
     void Awake()
     {
@@ -35,19 +38,39 @@ public class GameManger : MonoBehaviour
     void Init()
     {
     }
-     
-     void Start() {
-         CountAliens();
-     }                 
 
-     private void CountAliens() {
-        AlienInitalCount = FindObjectsOfType<AlienAnimation>(false).Length;
-        AlienCount = AlienInitalCount;
-     }
-
-    public void AlienDied()
+    void Start()
     {
+        CountAliens();
+    }
+
+    private void CountAliens()
+    {
+        Aliens.Clear();
+        foreach (AlienAnimation alien in FindObjectsOfType<AlienAnimation>(false))
+        {
+            Aliens.Add(alien.gameObject.name, alien);
+        }
+        AlienInitalCount = Aliens.Count;
+        AlienCount = AlienInitalCount;
+    }
+
+    public void AlienDied(AlienAnimation alien)
+    {
+        Aliens.Remove(alien.name);
         AlienCount--;
+
+        // todo- remove this
+        AlienShootRandom();
+    }
+
+    private void AlienShootRandom()
+    {
+        if (Aliens.Count > 0)
+        {
+            AlienAnimation alien = Aliens.ElementAt(Random.Range(0, Aliens.Count)).Value;
+            alien.Shoot();
+        }
     }
 
     // Update is called once per frame

@@ -59,8 +59,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e586db049057f741a3814a77dbf6463, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AnimationFPS: 4
-  Speed: 100
+  AnimationFPS: 6
+  Speed: 50
   AnimationFramePrefabs: []
 --- !u!1 &8433923805662461675
 GameObject:

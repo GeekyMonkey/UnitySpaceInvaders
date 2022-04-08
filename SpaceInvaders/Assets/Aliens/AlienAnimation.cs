@@ -67,7 +67,7 @@ public class AlienAnimation : MonoBehaviour
         if (!Dead)
         {
             Dead = true;
-            GameManger.instance.AlienDied();
+            GameManger.instance.AlienDied(this);
 
             var pixels = this.GetComponentsInChildren<PixelScript>(false);
             Vector3 explosionPoint = new Vector3(bulletPosition.x, bulletPosition.y, transform.Find("ExplosionPoint").position.z);
@@ -76,10 +76,17 @@ public class AlienAnimation : MonoBehaviour
                 pixel.ExplodeFrom(explosionPoint, ExplosionForce, ExplosionSeconds);
             }
 
-            Instantiate(ExplosionPrefab, transform.position, Quaternion.identity);
+            Instantiate(ExplosionPrefab, explosionPoint, Quaternion.identity);
             GetComponent<BoxCollider>().enabled = false;
 
             GameObject.Destroy(this.gameObject, ExplosionSeconds);
         }
+    }
+
+    public void Shoot()
+    {
+        var missilePrefab = MissilePrefabs[Random.Range(0, MissilePrefabs.Count())];
+        Vector3 shootPoint = transform.Find("ShootPoint").position;
+        Instantiate(missilePrefab, shootPoint, Quaternion.identity, null);
     }
 }
