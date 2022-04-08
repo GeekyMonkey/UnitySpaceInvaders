@@ -25,7 +25,7 @@ public class AlienStomp : MonoBehaviour
     void Update()
     {
         if (GameManger.instance.AlienCount > 0) {
-        CalculateStompSpeed();
+        AlienStompPerSecond = GameManger.instance.SpeedFromAlienCount(MinSpeed, MaxSpeed);
         if (Time.time > LastStompTime + (1 / AlienStompPerSecond))
         {
             LastStompTime = Time.time;
@@ -39,8 +39,4 @@ public class AlienStomp : MonoBehaviour
         }
     }
 
-    void CalculateStompSpeed()
-    {
-        AlienStompPerSecond = MaxSpeed - (MaxSpeed - MinSpeed) * GameManger.instance.AnimationSpeedRatio;
-    }
 }

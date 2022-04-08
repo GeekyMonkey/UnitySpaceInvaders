@@ -35,7 +35,7 @@ public class AlienAnimation : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log(other.tag);
+        //Debug.Log(other.tag);
         if (other.tag == "Bullet")
         {
             Die(other.transform.position);

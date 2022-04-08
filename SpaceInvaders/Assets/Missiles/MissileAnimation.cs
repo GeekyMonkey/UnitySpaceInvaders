@@ -12,6 +12,8 @@ public class MissileAnimation : MonoBehaviour
     // public GameObject ExplosionPrefab;
     public float Speed = 100;
 
+    public float Life = 3;
+
     List<GameObject> AnimationFrames = new List<GameObject>();
     public GameObject[] AnimationFramePrefabs;
     private int FrameCount;
@@ -24,6 +26,7 @@ public class MissileAnimation : MonoBehaviour
     {
         CreateAnimationFrames();
         ShowFrame(0);
+        Destroy(gameObject, Life);
     }
 
     // Update is called once per frame
@@ -72,6 +75,11 @@ public class MissileAnimation : MonoBehaviour
             AnimationFrames.Add(frame);
         }
         FrameCount = AnimationFrames.Count();
+    }
+
+    private void OnDestroy()
+    {
+        GameManger.instance.MissileDestroyed();
     }
 
     // void Die(Vector3 bulletPosition)
