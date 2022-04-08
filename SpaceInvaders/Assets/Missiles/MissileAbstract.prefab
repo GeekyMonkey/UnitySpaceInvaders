@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 3243820662486527244}
   - component: {fileID: -6319248856283414908}
   - component: {fileID: 4901477205240757830}
+  - component: {fileID: 7354568280793620480}
   m_Layer: 7
   m_Name: MissileAbstract
   m_TagString: Missile
@@ -61,7 +62,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   AnimationFPS: 6
   Speed: 50
+  Life: 3
   AnimationFramePrefabs: []
+--- !u!54 &7354568280793620480
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3511225272307235589}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &8433923805662461675
 GameObject:
   m_ObjectHideFlags: 0

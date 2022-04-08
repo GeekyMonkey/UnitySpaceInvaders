@@ -44,14 +44,16 @@ public class MissileAnimation : MonoBehaviour
         transform.Translate(0, -Speed * Time.deltaTime, 0);
     }
 
-    // private void OnTriggerEnter(Collider other)
-    // {
-    //     Debug.Log(other.tag);
-    //     if (other.tag == "Bullet")
-    //     {
-    //         Die(other.transform.position);
-    //     }
-    // }
+    private void OnTriggerEnter(Collider other)
+    {
+        // Debug.Log("Missile Trigger " + other.tag);
+        if (other.tag == "Bullet")
+        {
+            Destroy(gameObject);
+            //   Die(other.transform.position);
+        }
+    }
+
 
     void ShowFrame(int frame)
     {

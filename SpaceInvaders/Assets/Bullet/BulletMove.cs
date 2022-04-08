@@ -7,6 +7,8 @@ public class BulletMove : MonoBehaviour
     public float SpeedMin = 80;
     public float SpeedMax = 100;
 
+    public GameObject MissileHitExplosion;
+
     public float Life = 3;
 
     private float Speed;
@@ -26,6 +28,11 @@ public class BulletMove : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        if (other.tag == "Missile")
+        {
+            Debug.Log("Explode at " + other.transform.position.ToString());
+            Instantiate(MissileHitExplosion, other.transform.position, Quaternion.identity);
+        }
         Destroy(gameObject, 0);
     }
 }

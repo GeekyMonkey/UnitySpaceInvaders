@@ -10,6 +10,14 @@ public class PlayerMovement : MonoBehaviour
     public float LastShotTime = 0f;
     public GameObject BulletPrefab;
 
+    public GameObject ExplosionPrefab;
+
+
+    public float ExplosionForce = 100f;
+    public float ExplosionSeconds = 6f;
+
+    public bool Dead = false;
+
     private float xMin = 0;
     private float xMax = 100;
     private float y = -50;
@@ -43,8 +51,11 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        MoveInput();
-        FireInput();
+        if (!Dead)
+        {
+            MoveInput();
+            FireInput();
+        }
     }
 
     void Fire()
@@ -72,5 +83,34 @@ public class PlayerMovement : MonoBehaviour
         float x = transform.position.x + dx;
         x = Mathf.Clamp(x, xMin, xMax);
         transform.position = new Vector3(x, y, 0);
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == "Missile")
+        {
+            Die(other.transform.position);
+        }
+    }
+
+    void Die(Vector3 bulletPosition)
+    {
+        if (!Dead)
+        {
+            Dead = true;
+            // GameManger.instance.PlayerDied(this);
+
+            var pixels = this.GetComponentsInChildren<PixelScript>(false);
+            Vector3 explosionPoint = new Vector3(bulletPosition.x, bulletPosition.y, transform.Find("ExplosionPoint").position.z);
+            foreach (var pixel in pixels)
+            {
+                pixel.ExplodeFrom(explosionPoint, ExplosionForce, ExplosionSeconds);
+            }
+
+            Instantiate(ExplosionPrefab, explosionPoint, Quaternion.identity);
+            GetComponent<BoxCollider>().enabled = false;
+
+            GameObject.Destroy(this.gameObject, ExplosionSeconds);
+        }
     }
 }
