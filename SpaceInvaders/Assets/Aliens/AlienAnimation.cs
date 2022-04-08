@@ -9,6 +9,7 @@ public class AlienAnimation : MonoBehaviour
     public float ExplosionForce = 100f;
     public float ExplosionSeconds = 6f;
     public GameObject ExplosionPrefab;
+    public GameObject[] MissilePrefabs;
 
     private Transform[] AnimationFrames;
     private int FrameCount;
@@ -67,7 +68,7 @@ public class AlienAnimation : MonoBehaviour
         {
             Dead = true;
             GameManger.instance.AlienDied();
-            
+
             var pixels = this.GetComponentsInChildren<PixelScript>(false);
             Vector3 explosionPoint = new Vector3(bulletPosition.x, bulletPosition.y, transform.Find("ExplosionPoint").position.z);
             foreach (var pixel in pixels)

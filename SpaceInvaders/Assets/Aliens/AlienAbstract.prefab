@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7075562018602089251}
   - component: {fileID: -6319248856283414908}
   m_Layer: 8
-  m_Name: Alien
+  m_Name: AlienAbstract
   m_TagString: Alien
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -47,11 +47,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2482a9c6e5b864249a996b19ad62f588, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AnimationSpeed: 0.5
   ExplosionForce: 250
   ExplosionSeconds: 6
   ExplosionPrefab: {fileID: 8358695683328826369, guid: eb37819caa33f174ea339c3f7f6e71f0,
     type: 3}
+  MissilePrefabs:
+  - {fileID: 6533883406327243965, guid: 6880e90639d44c24e84d508eecf346a8, type: 3}
+  - {fileID: 6533883406327243965, guid: 5844c75be22618640afe5055eea44776, type: 3}
 --- !u!65 &-6319248856283414908
 BoxCollider:
   m_ObjectHideFlags: 0
