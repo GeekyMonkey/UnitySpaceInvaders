@@ -11,6 +11,8 @@ public class AlienAnimation : MonoBehaviour
     public GameObject ExplosionPrefab;
     public GameObject[] MissilePrefabs;
 
+    public Material BurntPixelMaterial;
+
     private Transform[] AnimationFrames;
     private int FrameCount;
     private int FrameShown = -1;
@@ -92,6 +94,7 @@ public class AlienAnimation : MonoBehaviour
             foreach (var pixel in pixels)
             {
                 pixel.ExplodeFrom(explosionPoint, ExplosionForce, ExplosionSeconds);
+                pixel.gameObject.GetComponent<MeshRenderer>().material = BurntPixelMaterial;
             }
 
             Instantiate(ExplosionPrefab, explosionPoint, Quaternion.identity);

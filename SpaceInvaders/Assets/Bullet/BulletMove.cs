@@ -30,7 +30,7 @@ public class BulletMove : MonoBehaviour
     {
         if (other.tag == "Missile")
         {
-            Debug.Log("Explode at " + other.transform.position.ToString());
+            // Debug.Log("Explode at " + other.transform.position.ToString());
             Instantiate(MissileHitExplosion, other.transform.position, Quaternion.identity);
         }
         Destroy(gameObject, 0);

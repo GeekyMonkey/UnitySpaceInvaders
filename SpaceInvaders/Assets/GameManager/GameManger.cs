@@ -42,6 +42,8 @@ public class GameManger : MonoBehaviour
     public float SwarmMoveSecondsMax = 1.1f;
     public float SwarmMoveSecondsMin = 0.1f;
 
+    public bool PlayerAlive = true;
+
     private Dictionary<string, AlienAnimation> Aliens = new Dictionary<string, AlienAnimation>();
 
     void Awake()
@@ -94,6 +96,11 @@ public class GameManger : MonoBehaviour
         AlienCount--;
     }
 
+    public void PlayerDied(PlayerMovement player)
+    {
+        PlayerAlive = false;
+    }
+
     private void AlienShootRandom()
     {
         if (Aliens.Count > 0)
@@ -110,36 +117,42 @@ public class GameManger : MonoBehaviour
         AlienAnimationFPS = SpeedFromAlienCount(AlienAnimationFPSMin, AlienAnimationFPSMax);
         MissileReloadSeconds = SpeedFromAlienCount(MissileReloadMax, MissileReloadMin);
 
-        MoveSwarm();
-
+        // Animate aliens
         if (Time.time > AlienAnimationLastTime + (1 / AlienAnimationFPS))
         {
             AlienAnimationLastTime = Time.time;
             AlienAnimationFrame += 1;
         }
 
-        foreach (float missileShootTime in MissileShootTimes.ToArray())
+        if (PlayerAlive)
         {
-            if (missileShootTime < Time.time)
+            MoveSwarm();
+
+            // Alien shooting
+            foreach (float missileShootTime in MissileShootTimes.ToArray())
             {
-                MissileShootTimes.Remove(missileShootTime);
-                //Debug.Log("Missile shooting " + missileShootTime.ToString() + " < " + Time.time.ToString() + "  of " + MissileShootTimes.Count().ToString());
-                AlienShootRandom();
+                if (missileShootTime < Time.time)
+                {
+                    MissileShootTimes.Remove(missileShootTime);
+                    //Debug.Log("Missile shooting " + missileShootTime.ToString() + " < " + Time.time.ToString() + "  of " + MissileShootTimes.Count().ToString());
+                    AlienShootRandom();
+                }
             }
         }
     }
 
     void MoveSwarm()
-    {              
+    {
         // Aliens won
-        if (SwarmDirectionX == 0) {
+        if (SwarmDirectionX == 0)
+        {
             return;
-        }               
+        }
 
         if (Time.time > SwarmMoveNextTime)
         {
             float swarmMoveSeconds = SpeedFromAlienCount(SwarmMoveSecondsMax, SwarmMoveSecondsMin);
-            Debug.Log("Swarm move sec: " + swarmMoveSeconds.ToString());
+            // Debug.Log("Swarm move sec: " + swarmMoveSeconds.ToString());
             SwarmMoveNextTime = Time.time + swarmMoveSeconds;
 
             bool swarmHitLeft = false;
@@ -156,8 +169,9 @@ public class GameManger : MonoBehaviour
                 {
                     swarmHitRight = true;
                     break;
-                }                       
-                if (alien.Value.HitBottom) {
+                }
+                if (alien.Value.HitBottom)
+                {
                     swarmHitBottom = true;
                 }
             }
@@ -172,10 +186,11 @@ public class GameManger : MonoBehaviour
             else
             {
                 dx = SwarmMoveStepX * SwarmDirectionX;
-            }                             
+            }
 
-            if (swarmHitBottom) {
-                dx = 0;             
+            if (swarmHitBottom)
+            {
+                dx = 0;
                 dy = 0;
                 SwarmDirectionX = 0;
             }

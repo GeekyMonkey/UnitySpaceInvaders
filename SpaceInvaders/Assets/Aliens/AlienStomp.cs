@@ -24,7 +24,7 @@ public class AlienStomp : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (GameManger.instance.AlienCount > 0) {
+        if (GameManger.instance.AlienCount > 0 && GameManger.instance.PlayerAlive) {
         AlienStompPerSecond = GameManger.instance.SpeedFromAlienCount(MinSpeed, MaxSpeed);
         if (Time.time > LastStompTime + (1 / AlienStompPerSecond))
         {

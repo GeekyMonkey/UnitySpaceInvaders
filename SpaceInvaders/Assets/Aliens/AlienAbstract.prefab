@@ -56,6 +56,7 @@ MonoBehaviour:
   MissilePrefabs:
   - {fileID: 6533883406327243965, guid: 6880e90639d44c24e84d508eecf346a8, type: 3}
   - {fileID: 6533883406327243965, guid: 5844c75be22618640afe5055eea44776, type: 3}
+  BurntPixelMaterial: {fileID: 2100000, guid: 135e8acf1ac23594085b4601d1ac02d0, type: 2}
   AlienWidth: 8
 --- !u!65 &-6319248856283414908
 BoxCollider:

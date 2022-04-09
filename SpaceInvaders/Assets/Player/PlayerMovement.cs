@@ -106,7 +106,7 @@ public class PlayerMovement : MonoBehaviour
         if (!Dead)
         {
             Dead = true;
-            // GameManger.instance.PlayerDied(this);
+            GameManger.instance.PlayerDied(this);
 
             var pixels = this.GetComponentsInChildren<PixelScript>(false);
             Vector3 explosionPoint = new Vector3(bulletPosition.x, bulletPosition.y, transform.Find("ExplosionPoint").position.z);
