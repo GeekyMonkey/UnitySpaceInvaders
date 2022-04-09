@@ -18,8 +18,8 @@ public class PlayerMovement : MonoBehaviour
 
     public bool Dead = false;
 
-    private float xMin = 0;
-    private float xMax = 100;
+    private float xMin = 2;
+    private float xMax = 200;
     private float y = -50;
     private PlayerInput playerInput;
     private Transform CanonPosition;
@@ -27,8 +27,8 @@ public class PlayerMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        xMin = GameObject.Find("ScreenBorderBottomLeft").GetComponent<Transform>().position.x + PlayerWidth / 2;
-        xMax = GameObject.Find("ScreenBorderTopRight").GetComponent<Transform>().position.x - PlayerWidth / 2;
+        xMin = GameManger.instance.ScreenXMin + PlayerWidth / 2;
+        xMax = GameManger.instance.ScreenXMax - PlayerWidth / 2;
         y = transform.position.y;
         CanonPosition = transform.Find("CanonPosition");
     }
@@ -88,6 +88,14 @@ public class PlayerMovement : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Missile")
+        {
+            Die(other.transform.position);
+        }
+    }
+
+    private void OnCollisionEnter(Collision other)
+    {
+        if (other.gameObject.tag == "Alien")
         {
             Die(other.transform.position);
         }

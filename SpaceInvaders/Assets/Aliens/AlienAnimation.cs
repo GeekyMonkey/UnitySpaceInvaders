@@ -16,12 +16,22 @@ public class AlienAnimation : MonoBehaviour
     private int FrameShown = -1;
     private bool Dead = false;
 
+    private float xMin;
+    private float xMax;
+    public float AlienWidth = 8;
+    internal bool HitLeft = false;
+    internal bool HitRight = false;
+    internal bool HitBottom = false;
+
 
     // Start is called before the first frame update
     void Start()
     {
         FindAnimationFrames();
         ShowFrame(0);
+
+        xMin = GameManger.instance.ScreenXMin + AlienWidth / 2.0f;
+        xMax = GameManger.instance.ScreenXMax - AlienWidth / 2.0f;
     }
 
     // Update is called once per frame
@@ -31,6 +41,14 @@ public class AlienAnimation : MonoBehaviour
         {
             ShowFrame(GameManger.instance.AlienAnimationFrame % FrameCount);
         }
+    }
+
+    private void TestBounds()
+    {
+        float x = transform.position.x;
+        HitLeft = (x - (AlienWidth / 2)) < (GameManger.instance.ScreenXMin + GameManger.instance.PaddingX);
+        HitRight = (x + (AlienWidth / 2)) > (GameManger.instance.ScreenXMax - GameManger.instance.PaddingX);
+        HitBottom = transform.position.y < (GameManger.instance.ScreenYMin + GameManger.instance.PaddingY);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -88,5 +106,11 @@ public class AlienAnimation : MonoBehaviour
         var missilePrefab = MissilePrefabs[Random.Range(0, MissilePrefabs.Count())];
         Vector3 shootPoint = transform.Find("ShootPoint").position;
         Instantiate(missilePrefab, shootPoint, Quaternion.identity, null);
+    }
+
+    public void Move(float dX, float dY)
+    {
+        this.transform.Translate(dX, dY, 0);
+        TestBounds();
     }
 }
