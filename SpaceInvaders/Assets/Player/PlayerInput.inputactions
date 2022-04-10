@@ -16,9 +16,9 @@
                 },
                 {
                     "name": "Fire",
-                    "type": "PassThrough",
+                    "type": "Button",
                     "id": "caf0fe54-fac6-4f22-b111-a595eaf97837",
-                    "expectedControlType": "Digital",
+                    "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
@@ -163,7 +163,18 @@
                     "path": "<Gamepad>/buttonSouth",
                     "interactions": "",
                     "processors": "",
-                    "groups": ";Gamepad",
+                    "groups": "Gamepad",
+                    "action": "Fire",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "7f4aa646-6738-400e-a238-8b4c15018644",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
                     "action": "Fire",
                     "isComposite": false,
                     "isPartOfComposite": false

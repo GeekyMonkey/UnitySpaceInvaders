@@ -10,7 +10,8 @@ public class MissileAnimation : MonoBehaviour
     // public float ExplosionForce = 100f;
     // public float ExplosionSeconds = 6f;
     // public GameObject ExplosionPrefab;
-    public float Speed = 100;
+    public float SpeedMin = 80;
+    public float SpeedMax = 100;
 
     public float Life = 3;
 
@@ -41,7 +42,8 @@ public class MissileAnimation : MonoBehaviour
 
     void Move()
     {
-        transform.Translate(0, -Speed * Time.deltaTime, 0);
+        float speed = GameManger.instance.SpeedFromAlienCount(SpeedMin, SpeedMax);
+                transform.Translate(0, -speed * Time.deltaTime, 0);
     }
 
     private void OnTriggerEnter(Collider other)
