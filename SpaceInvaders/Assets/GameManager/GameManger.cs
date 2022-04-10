@@ -27,6 +27,7 @@ public class GameManger : MonoBehaviour
     public List<float> MissileShootTimes = new List<float>();
     public float MissileReloadSeconds = 3;
 
+    private List<float> previousShootX = new List<float>();
 
     public float PaddingX = 12;
     public float PaddingY = 12;
@@ -42,7 +43,11 @@ public class GameManger : MonoBehaviour
     public float SwarmMoveSecondsMax = 1.1f;
     public float SwarmMoveSecondsMin = 0.1f;
 
+    private int Score = 0;
+
     public bool PlayerAlive = true;
+
+    public TMPro.TextMeshProUGUI ScoreValueText;
 
     private Dictionary<string, AlienAnimation> Aliens = new Dictionary<string, AlienAnimation>();
 
@@ -94,6 +99,8 @@ public class GameManger : MonoBehaviour
     {
         Aliens.Remove(alien.name);
         AlienCount--;
+        Score += alien.Points;
+        ScoreValueText.text = Score.ToString();
     }
 
     public void PlayerDied(PlayerMovement player)
@@ -101,13 +108,29 @@ public class GameManger : MonoBehaviour
         PlayerAlive = false;
     }
 
-    private void AlienShootRandom()
+    private bool AlienShootRandom()
     {
+        bool didShoot = false;
+
         if (Aliens.Count > 0)
         {
             AlienAnimation alien = Aliens.ElementAt(Random.Range(0, Aliens.Count)).Value;
-            alien.Shoot();
+
+            // Prevent multiple missiles from same X
+            float shootX = alien.transform.position.x;
+            if (!previousShootX.Any((x) => x == shootX))
+            {
+                alien.Shoot();
+                didShoot = true;
+                previousShootX.Add(shootX);
+                while (previousShootX.Count() > MissilesSimultaneous)
+                {
+                    previousShootX.Remove(previousShootX[0]);
+                }
+            }
         }
+
+        return didShoot;
     }
 
     // Update is called once per frame
@@ -118,11 +141,11 @@ public class GameManger : MonoBehaviour
         MissileReloadSeconds = SpeedFromAlienCount(MissileReloadMax, MissileReloadMin);
 
         // Animate aliens
-        if (Time.time > AlienAnimationLastTime + (1 / AlienAnimationFPS))
-        {
-            AlienAnimationLastTime = Time.time;
-            AlienAnimationFrame += 1;
-        }
+        // if (Time.time > AlienAnimationLastTime + (1 / AlienAnimationFPS))
+        // {
+        //     AlienAnimationLastTime = Time.time;
+        //     AlienAnimationFrame += 1;
+        // }
 
         if (PlayerAlive)
         {
@@ -133,9 +156,12 @@ public class GameManger : MonoBehaviour
             {
                 if (missileShootTime < Time.time)
                 {
-                    MissileShootTimes.Remove(missileShootTime);
                     //Debug.Log("Missile shooting " + missileShootTime.ToString() + " < " + Time.time.ToString() + "  of " + MissileShootTimes.Count().ToString());
-                    AlienShootRandom();
+                    if (AlienShootRandom())
+                    {
+                        MissileShootTimes.Remove(missileShootTime);
+
+                    }
                 }
             }
         }
@@ -151,6 +177,7 @@ public class GameManger : MonoBehaviour
 
         if (Time.time > SwarmMoveNextTime)
         {
+            AlienAnimationFrame += 1;
             float swarmMoveSeconds = SpeedFromAlienCount(SwarmMoveSecondsMax, SwarmMoveSecondsMin);
             // Debug.Log("Swarm move sec: " + swarmMoveSeconds.ToString());
             SwarmMoveNextTime = Time.time + swarmMoveSeconds;

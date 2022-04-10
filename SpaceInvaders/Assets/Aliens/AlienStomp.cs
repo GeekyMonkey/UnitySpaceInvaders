@@ -15,6 +15,8 @@ public class AlienStomp : MonoBehaviour
     private int StompIndex = -1;
     private float LastStompTime = 0;
 
+    private int previousAlienAnimationFrame = 0;
+
     void Awake()
     {
         StompAudioSource = GetComponent<AudioSource>();
@@ -24,19 +26,30 @@ public class AlienStomp : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (GameManger.instance.AlienCount > 0 && GameManger.instance.PlayerAlive) {
-        AlienStompPerSecond = GameManger.instance.SpeedFromAlienCount(MinSpeed, MaxSpeed);
-        if (Time.time > LastStompTime + (1 / AlienStompPerSecond))
+        if (GameManger.instance.AlienCount > 0 && GameManger.instance.PlayerAlive)
         {
-            LastStompTime = Time.time;
-            StompIndex += 1;
-            if (StompIndex >= AlienStompSoundCount)
+            // AlienStompPerSecond = GameManger.instance.SpeedFromAlienCount(MinSpeed, MaxSpeed);
+            // if (Time.time > LastStompTime + (1 / AlienStompPerSecond))
+            // {
+            //     LastStompTime = Time.time;
+            //     PlayStomp();
+            // }
+
+            if (GameManger.instance.AlienAnimationFrame != previousAlienAnimationFrame)
             {
-                StompIndex = 0;
+                previousAlienAnimationFrame = GameManger.instance.AlienAnimationFrame;
+                PlayStomp();
             }
-            StompAudioSource.PlayOneShot(AlienStompSounds[StompIndex]);
-        }                                        
         }
     }
 
+    void PlayStomp()
+    {
+        StompIndex += 1;
+        if (StompIndex >= AlienStompSoundCount)
+        {
+            StompIndex = 0;
+        }
+        StompAudioSource.PlayOneShot(AlienStompSounds[StompIndex]);
+    }
 }

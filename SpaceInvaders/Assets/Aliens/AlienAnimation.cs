@@ -11,6 +11,8 @@ public class AlienAnimation : MonoBehaviour
     public GameObject ExplosionPrefab;
     public GameObject[] MissilePrefabs;
 
+    public int Points = 10;
+
     public Material BurntPixelMaterial;
 
     private Transform[] AnimationFrames;
@@ -55,12 +57,23 @@ public class AlienAnimation : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        //Debug.Log(other.tag);
+        //Debug.Log("Alien trigger " + other.tag);
         if (other.tag == "Bullet")
         {
             Die(other.transform.position);
         }
     }
+
+    private void OnCollisionEnter(Collision other)
+    {
+        //Debug.Log("Alien collide " + other.gameObject.tag);
+        if (other.gameObject.tag == "Shield")
+        {   
+            other.gameObject.GetComponentInParent<ShieldScript>().ExplodeFrom(other.GetContact(0).point);
+        }
+
+    }
+
 
     void ShowFrame(int frame)
     {

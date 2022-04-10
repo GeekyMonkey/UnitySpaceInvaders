@@ -9,6 +9,7 @@ TagManager:
   - Alien
   - Bullet
   - Missile
+  - Shield
   layers:
   - Default
   - TransparentFX
@@ -21,7 +22,7 @@ TagManager:
   - Alien
   - Player
   - Bullet
-  - 
+  - Shield
   - 
   - 
   - 

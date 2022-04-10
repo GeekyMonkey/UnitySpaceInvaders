@@ -9,9 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7141066215625458875}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Missile2A
-  m_TagString: AnimationFrame
+  m_TagString: Missile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -111,6 +111,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: Pixel (15)
       objectReference: {fileID: 0}
+    - target: {fileID: 8896943031835519870, guid: 7427eb274fba2254099f64f9d642a7af,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 8896943031835519870, guid: 7427eb274fba2254099f64f9d642a7af,
+        type: 3}
+      propertyPath: m_TagString
+      value: Missile
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7427eb274fba2254099f64f9d642a7af, type: 3}
 --- !u!4 &2527929200647355449 stripped
@@ -190,6 +200,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Pixel (24)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8896943031835519870, guid: 7427eb274fba2254099f64f9d642a7af,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 8896943031835519870, guid: 7427eb274fba2254099f64f9d642a7af,
+        type: 3}
+      propertyPath: m_TagString
+      value: Missile
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7427eb274fba2254099f64f9d642a7af, type: 3}
@@ -271,6 +291,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: Pixel (31)
       objectReference: {fileID: 0}
+    - target: {fileID: 8896943031835519870, guid: 7427eb274fba2254099f64f9d642a7af,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 8896943031835519870, guid: 7427eb274fba2254099f64f9d642a7af,
+        type: 3}
+      propertyPath: m_TagString
+      value: Missile
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7427eb274fba2254099f64f9d642a7af, type: 3}
 --- !u!4 &465325987590157758 stripped
@@ -350,6 +380,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Pixel (30)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8896943031835519870, guid: 7427eb274fba2254099f64f9d642a7af,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 8896943031835519870, guid: 7427eb274fba2254099f64f9d642a7af,
+        type: 3}
+      propertyPath: m_TagString
+      value: Missile
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7427eb274fba2254099f64f9d642a7af, type: 3}
@@ -431,6 +471,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: Pixel (14)
       objectReference: {fileID: 0}
+    - target: {fileID: 8896943031835519870, guid: 7427eb274fba2254099f64f9d642a7af,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 8896943031835519870, guid: 7427eb274fba2254099f64f9d642a7af,
+        type: 3}
+      propertyPath: m_TagString
+      value: Missile
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7427eb274fba2254099f64f9d642a7af, type: 3}
 --- !u!4 &7144650936307472173 stripped
@@ -510,6 +560,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Pixel (27)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8896943031835519870, guid: 7427eb274fba2254099f64f9d642a7af,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 8896943031835519870, guid: 7427eb274fba2254099f64f9d642a7af,
+        type: 3}
+      propertyPath: m_TagString
+      value: Missile
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7427eb274fba2254099f64f9d642a7af, type: 3}
@@ -591,6 +651,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: Pixel (26)
       objectReference: {fileID: 0}
+    - target: {fileID: 8896943031835519870, guid: 7427eb274fba2254099f64f9d642a7af,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 8896943031835519870, guid: 7427eb274fba2254099f64f9d642a7af,
+        type: 3}
+      propertyPath: m_TagString
+      value: Missile
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7427eb274fba2254099f64f9d642a7af, type: 3}
 --- !u!4 &8395467521075214132 stripped
@@ -670,6 +740,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Pixel (28)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8896943031835519870, guid: 7427eb274fba2254099f64f9d642a7af,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 8896943031835519870, guid: 7427eb274fba2254099f64f9d642a7af,
+        type: 3}
+      propertyPath: m_TagString
+      value: Missile
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7427eb274fba2254099f64f9d642a7af, type: 3}

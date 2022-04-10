@@ -95,8 +95,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c1932599efc7a824ebcc10ecb909a789, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SpeedMin: 80
-  SpeedMax: 100
+  Speed: 130
   MissileHitExplosion: {fileID: 6375308227486327279, guid: 55929ab7bf4a5664f828302fa9b6c991,
     type: 3}
   Life: 3
@@ -129,7 +128,7 @@ AudioSource:
   m_audioClip: {fileID: 8300000, guid: d372ef5a7f99ba94193968af4cd273f1, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 0.665
-  m_Pitch: 1
+  m_Pitch: 1.05
   Loop: 0
   Mute: 0
   Spatialize: 0

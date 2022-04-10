@@ -11,6 +11,7 @@ public class BulletMove : MonoBehaviour
     public float Life = 3;
 
 
+
     // Start is called before the first frame update
     void Start()
     {
@@ -25,10 +26,17 @@ public class BulletMove : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        // Debug.Log("Bullet trigger " + other.tag);
         if (other.tag == "Missile")
         {
             // Debug.Log("Explode at " + other.transform.position.ToString());
             Instantiate(MissileHitExplosion, other.transform.position, Quaternion.identity);
+            Destroy(other.GetComponent<MissileAnimation>().gameObject);
+        }
+        else
+        if (other.tag == "Shield")
+        {
+            other.GetComponentInParent<ShieldScript>().ExplodeFrom(other.transform.position);
         }
         Destroy(gameObject, 0);
     }

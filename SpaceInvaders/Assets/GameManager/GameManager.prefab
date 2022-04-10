@@ -48,8 +48,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   AlienCount: 50
   AlienInitalCount: 50
+  MissilesSimultaneous: 3
+  MissileReloadMin: 1
+  MissileReloadMax: 3
   AlienAnimationFPSMin: 3
   AlienAnimationFPSMax: 9
+  MissileShootTimes: []
+  MissileReloadSeconds: 3
+  PaddingX: 12
+  PaddingY: 12
+  ScreenXMin: -100
+  ScreenXMax: 100
+  ScreenYMin: -100
+  ScreenYMax: 100
+  SwarmDirectionX: 1
+  SwarmMoveStepX: 8
+  SwarmMoveStepY: 6
+  SwarmMoveSecondsMax: 0.5
+  SwarmMoveSecondsMin: 0.1
+  PlayerAlive: 1
 --- !u!82 &3134112481172338842
 AudioSource:
   m_ObjectHideFlags: 0

@@ -43,18 +43,30 @@ public class MissileAnimation : MonoBehaviour
     void Move()
     {
         float speed = GameManger.instance.SpeedFromAlienCount(SpeedMin, SpeedMax);
-                transform.Translate(0, -speed * Time.deltaTime, 0);
+        transform.Translate(0, -speed * Time.deltaTime, 0);
     }
 
     private void OnTriggerEnter(Collider other)
     {
+        Debug.Log("Missile trigger " + other.tag);
         // Debug.Log("Missile Trigger " + other.tag);
-        if (other.tag == "Bullet")
+        // if (other.tag == "Bullet")
+        // {
+        //     Destroy(gameObject);
+        //     //   Die(other.transform.position);
+        // }
+
+        if (other.tag == "Shield")
         {
+            other.gameObject.GetComponentInParent<ShieldScript>().ExplodeFrom(transform.position);
             Destroy(gameObject);
-            //   Die(other.transform.position);
         }
     }
+
+    // private void OnCollisionEnter(Collision other)
+    // {
+    //     Debug.Log("Missile collide " + other.gameObject.tag);
+    // }
 
 
     void ShowFrame(int frame)

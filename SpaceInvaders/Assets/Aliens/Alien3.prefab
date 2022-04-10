@@ -917,6 +917,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7075562018602089251, guid: 44e49ed434d3e6a44807dd93b8b977c8,
         type: 3}
+      propertyPath: Points
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 7075562018602089251, guid: 44e49ed434d3e6a44807dd93b8b977c8,
+        type: 3}
       propertyPath: AnimationSpeed
       value: 3
       objectReference: {fileID: 0}
