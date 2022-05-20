@@ -18,17 +18,33 @@ public class NewGameScript : MonoBehaviour
         NameInput.text = "";
         ValidateName();
 
+        NameInput.ActivateInputField();
+
         NameInput.onValueChanged.AddListener((string value) =>
         {
             Name = value;
             ValidateName();
         });
 
+        NameInput.onSubmit.AddListener((string value) =>
+        {
+            ValidateName();
+            if (PlayButton.interactable)
+            {
+                PlayGame();
+            }
+        });
+
         PlayButton.onClick.AddListener(() =>
         {
-            GlobalStateScript.Instance.PlayerName = Name;
-            SceneManager.LoadScene("GameScene", LoadSceneMode.Single);
+            PlayGame();
         });
+    }
+
+    void PlayGame()
+    {
+        GlobalStateScript.Instance.PlayerName = Name;
+        SceneManager.LoadScene("GameScene", LoadSceneMode.Single);
     }
 
     void ValidateName()

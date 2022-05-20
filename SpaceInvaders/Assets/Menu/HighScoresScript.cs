@@ -14,11 +14,10 @@ public class HighScoresScript : MonoBehaviour
     public int HighScoresCountMax = 10;
 
     private List<Transform> HighScoreRows = new List<Transform>();
-    private HighScoreEntries HighScoreData;
-    private string FileName = "C:/temp/HighScores.json";
 
-    void Awake()
+    void Start()
     {
+        Debug.Log("High Scores Start");
         for (int i = 0; i < HighScoresCountMax; i++)
         {
             Transform clone = Instantiate(HighScoreTemplate, HighScoresContainer);
@@ -27,19 +26,12 @@ public class HighScoresScript : MonoBehaviour
             HighScoreRows.Add(rect);
         }
         HighScoreTemplate.gameObject.SetActive(false);
-        LoadScores();
+        DrawScores();
     }
 
-    void LoadScores()
+    void DrawScores()
     {
-        StreamReader reader = new StreamReader(FileName);
-        string json = reader.ReadToEnd();
-        reader.Close();
-        HighScoreData = JsonUtility.FromJson<HighScoreEntries>(json);
-        HighScoreData.HighScores = HighScoreData.HighScores
-            .OrderByDescending((hs) => hs.Score)
-            .ThenBy((hs) => hs.Timestamp)
-            .ToList();
+        var HighScoreData = GlobalStateScript.Instance.HighScoreData;
         int HighScoresCount = HighScoreData.HighScores.Count;
 
         for (int i = 0; i < HighScoresCountMax; i++)
@@ -58,26 +50,6 @@ public class HighScoresScript : MonoBehaviour
             row.Find("NameText").GetComponent<TMP_Text>().text = nameText;
             row.Find("ScoreText").GetComponent<TMP_Text>().text = scoreText;
         }
-    }
-
-    void AddHighScore(string name, int score)
-    {
-        DateTime foo = DateTime.Now;
-        long unixTime = ((DateTimeOffset)foo).ToUnixTimeSeconds();
-
-        var newHighScore = new HighScoreEntry
-        {
-            Name = name,
-            Score = score,
-            Timestamp = unixTime
-        };
-        LoadScores();
-        HighScoreData.HighScores.Add(newHighScore);
-
-        string json = JsonUtility.ToJson(HighScoreData);
-        var writer = new StreamWriter(FileName, false, System.Text.Encoding.UTF8);
-        writer.Write(json);
-        writer.Close();
     }
 
 }
