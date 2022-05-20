@@ -48,6 +48,7 @@ public class GameManger : MonoBehaviour
     public bool PlayerAlive = true;
 
     public TMPro.TextMeshProUGUI ScoreValueText;
+    public TMPro.TextMeshProUGUI PlayerNameText;
 
     private Dictionary<string, AlienAnimation> Aliens = new Dictionary<string, AlienAnimation>();
 
@@ -82,6 +83,8 @@ public class GameManger : MonoBehaviour
         {
             ReloadMissile();
         }
+
+        PlayerNameText.text = GlobalStateScript.Instance.PlayerName;
     }
 
     private void CountAliens()
