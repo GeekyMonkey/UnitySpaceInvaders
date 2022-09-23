@@ -25,7 +25,7 @@ public class ShieldScript : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         // bullet
-        Debug.Log("Shield trigger " + other.gameObject.tag);
+        // Debug.Log("Shield trigger " + other.gameObject.tag);
         // if (other.gameObject.tag == "Bullet")
         // {
         //     this.ExplodeFrom(other.transform.position);
@@ -35,7 +35,7 @@ public class ShieldScript : MonoBehaviour
 
     private void OnCollisionEnter(Collision other)
     {
-        Debug.Log("Shield collide " + other.gameObject.tag);
+        // Debug.Log("Shield collide " + other.gameObject.tag);
         // if (other.gameObject.tag == "Missile")
         // {
         //     this.ExplodeFrom(other.transform.position);

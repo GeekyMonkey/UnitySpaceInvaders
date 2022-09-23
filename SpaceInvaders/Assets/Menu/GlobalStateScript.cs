@@ -16,7 +16,7 @@ public class GlobalStateScript : MonoBehaviour
 
     private void Awake()
     {
-        Debug.Log("Global State Awake");
+        //Debug.Log("Global State Awake");
         Cursor.visible = false;
 
         if (Instance != null)
@@ -31,8 +31,20 @@ public class GlobalStateScript : MonoBehaviour
     }
 
 
-    void AddHighScore(string name, int score)
+    public void AddHighScore(string name, int score)
     {
+        // Ingore mentors & testers;
+        string[] IgnorePlayers = new string[]{
+            "Player A",
+            "Quinn",
+            "Russ"
+            };
+        if (IgnorePlayers.Any((n) => n.ToLower() == name.ToLower()))
+        {
+            // Play testing
+            return;
+        }
+
         DateTime now = DateTime.Now;
         long unixTime = ((DateTimeOffset)now).ToUnixTimeSeconds();
 
@@ -49,9 +61,10 @@ public class GlobalStateScript : MonoBehaviour
         var writer = new StreamWriter(FileName, false, System.Text.Encoding.UTF8);
         writer.Write(json);
         writer.Close();
+        LoadScores();
     }
 
-    void LoadScores()
+    private void LoadScores()
     {
         try
         {

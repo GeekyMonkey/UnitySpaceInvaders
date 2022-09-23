@@ -1,14 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
+using UnityEditor;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManger : MonoBehaviour
 {
     // Singleton instance
     public static GameManger instance;
 
-    public int AlienCount = 50;
+    public int AlienCount = 0;
     public int AlienInitalCount = 50;
 
     public int MissilesSimultaneous = 3;
@@ -43,14 +46,28 @@ public class GameManger : MonoBehaviour
     public float SwarmMoveSecondsMax = 1.1f;
     public float SwarmMoveSecondsMin = 0.1f;
 
+    private int UfoSecondsMin = 8;
+    private int UfoSecondsMax = 36;
+
     private int Score = 0;
+    public int Level = 1;
+    public float LevelMultipler = 7f;
+    public Vector3 SwarmStartPosition = new Vector3(-75, 0, 0);
 
     public bool PlayerAlive = true;
 
+    public TMPro.TextMeshProUGUI LevelValueText;
     public TMPro.TextMeshProUGUI ScoreValueText;
     public TMPro.TextMeshProUGUI PlayerNameText;
 
     private Dictionary<string, AlienAnimation> Aliens = new Dictionary<string, AlienAnimation>();
+    public GameObject Swarm;
+
+    public List<GameObject> AlienSwarms = new List<GameObject>();
+    public List<GameObject> UfoTypes = new List<GameObject>();
+    public GameObject Player;
+    public Transform UfoStartPosition;
+    public int UfoType = 1;
 
     void Awake()
     {
@@ -70,7 +87,7 @@ public class GameManger : MonoBehaviour
     {
     }
 
-    void Start()
+    IEnumerator Start()
     {
         var bottomLeft = GameObject.Find("ScreenBorderBottomLeft").GetComponent<Transform>().position;
         var topRight = GameObject.Find("ScreenBorderTopRight").GetComponent<Transform>().position;
@@ -78,13 +95,45 @@ public class GameManger : MonoBehaviour
         ScreenXMax = topRight.x;
         ScreenYMin = bottomLeft.y;
         ScreenYMax = topRight.y;
+        PlayerNameText.text = GlobalStateScript.Instance.PlayerName;
+        LevelValueText.text = Level.ToString();
+
+        DestroySwarm();
+        yield return new WaitForSeconds(3f);
+        SpawnSwarm();
+    }
+
+    void DestroySwarm()
+    {
+        AlienCount = 0;
+        if (Swarm != null)
+        {
+            Destroy(Swarm);
+            Swarm = null;
+        }
+    }
+
+    void SpawnSwarm()
+    {
+        Swarm = Instantiate(AlienSwarms[(Level - 1) % AlienSwarms.Count], SwarmStartPosition, Quaternion.identity);
         CountAliens();
         for (int i = 0; i < MissilesSimultaneous; i++)
         {
             ReloadMissile();
         }
+        SpawnUfo();
+    }
 
-        PlayerNameText.text = GlobalStateScript.Instance.PlayerName;
+    async void SpawnUfo()
+    {
+        await Task.Delay(Random.Range(UfoSecondsMin * 1000, UfoSecondsMax * 1000));
+        if (AlienCount > 0 && EditorApplication.isPlaying)
+        {
+            Debug.Log("Spawn ufo type " + UfoType);
+            GameObject Ufo = Instantiate(UfoTypes[UfoType % UfoTypes.Count], UfoStartPosition.position, Quaternion.identity);
+            UfoType++;
+            SpawnUfo();
+        }
     }
 
     private void CountAliens()
@@ -92,23 +141,52 @@ public class GameManger : MonoBehaviour
         Aliens.Clear();
         foreach (AlienAnimation alien in FindObjectsOfType<AlienAnimation>(false))
         {
-            Aliens.Add(alien.gameObject.name, alien);
+            // Ignore ufos               
+            if (alien.gameObject.CompareTag("Alien"))
+            {
+                Aliens.Add(alien.gameObject.name, alien);
+            }
         }
         AlienInitalCount = Aliens.Count;
         AlienCount = AlienInitalCount;
+        Debug.Log("Alien count=" + AlienCount);
     }
 
     public void AlienDied(AlienAnimation alien)
     {
-        Aliens.Remove(alien.name);
-        AlienCount--;
         Score += alien.Points;
         ScoreValueText.text = Score.ToString();
+
+        // Skip for UFO
+        if (alien.gameObject.CompareTag("Alien"))
+        {
+            Aliens.Remove(alien.name);
+            AlienCount--;
+            Debug.Log("AlienCount:" + AlienCount.ToString());
+            if (AlienCount < 1)
+            {
+                LevelUp();
+            }
+        }
     }
 
-    public void PlayerDied(PlayerMovement player)
+    private async void LevelUp()
+    {
+        Level++;
+        LevelValueText.text = Level.ToString();
+        DestroySwarm();
+        await Task.Delay(2000);
+        SpawnSwarm();
+    }
+
+    public async void PlayerDied(PlayerMovement player)
     {
         PlayerAlive = false;
+        GlobalStateScript.Instance.AddHighScore(GlobalStateScript.Instance.PlayerName, Score);
+
+        await Task.Delay(3000);
+
+        SceneManager.LoadScene("MenuScene", LoadSceneMode.Single);
     }
 
     private bool AlienShootRandom()
@@ -140,8 +218,8 @@ public class GameManger : MonoBehaviour
     void Update()
     {
         AnimationSpeedRatio = Mathf.Clamp((Mathf.Sqrt(Mathf.Clamp(AlienCount - 1, 0, 1000)) / Mathf.Sqrt(AlienInitalCount - 1)), 0f, 1f);
-        AlienAnimationFPS = SpeedFromAlienCount(AlienAnimationFPSMin, AlienAnimationFPSMax);
-        MissileReloadSeconds = SpeedFromAlienCount(MissileReloadMax, MissileReloadMin);
+        AlienAnimationFPS = SpeedFromAlienCount(AlienAnimationFPSMin, AlienAnimationFPSMax, Level);
+        MissileReloadSeconds = SpeedFromAlienCount(MissileReloadMax, MissileReloadMin, 1);
 
         // Animate aliens
         // if (Time.time > AlienAnimationLastTime + (1 / AlienAnimationFPS))
@@ -181,7 +259,7 @@ public class GameManger : MonoBehaviour
         if (Time.time > SwarmMoveNextTime)
         {
             AlienAnimationFrame += 1;
-            float swarmMoveSeconds = SpeedFromAlienCount(SwarmMoveSecondsMax, SwarmMoveSecondsMin);
+            float swarmMoveSeconds = SpeedFromAlienCount(SwarmMoveSecondsMax, SwarmMoveSecondsMin, Level);
             // Debug.Log("Swarm move sec: " + swarmMoveSeconds.ToString());
             SwarmMoveNextTime = Time.time + swarmMoveSeconds;
 
@@ -223,6 +301,7 @@ public class GameManger : MonoBehaviour
                 dx = 0;
                 dy = 0;
                 SwarmDirectionX = 0;
+                Player.GetComponent<PlayerMovement>().Die(Player.transform.position);
             }
 
             foreach (var alien in Aliens)
@@ -232,9 +311,14 @@ public class GameManger : MonoBehaviour
         }
     }
 
-    public float SpeedFromAlienCount(float min, float max)
+    /** Delay in seconds */
+    public float SpeedFromAlienCount(float min, float max, int level)
     {
-        return max - (max - min) * AnimationSpeedRatio;
+        var s = max - (max - min) * AnimationSpeedRatio;
+        if (level != 1) {
+            s /= (((float)Level - 1.0f) * LevelMultipler + 1);
+        }
+        return s;
     }
 
     public void MissileDestroyed()

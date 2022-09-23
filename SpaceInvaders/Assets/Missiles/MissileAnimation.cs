@@ -42,13 +42,12 @@ public class MissileAnimation : MonoBehaviour
 
     void Move()
     {
-        float speed = GameManger.instance.SpeedFromAlienCount(SpeedMin, SpeedMax);
+        float speed = GameManger.instance.SpeedFromAlienCount(SpeedMin, SpeedMax, 1);
         transform.Translate(0, -speed * Time.deltaTime, 0);
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("Missile trigger " + other.tag);
         // Debug.Log("Missile Trigger " + other.tag);
         // if (other.tag == "Bullet")
         // {

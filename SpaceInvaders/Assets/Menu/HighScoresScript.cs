@@ -17,7 +17,7 @@ public class HighScoresScript : MonoBehaviour
 
     void Start()
     {
-        Debug.Log("High Scores Start");
+        //Debug.Log("High Scores Start");
         for (int i = 0; i < HighScoresCountMax; i++)
         {
             Transform clone = Instantiate(HighScoreTemplate, HighScoresContainer);

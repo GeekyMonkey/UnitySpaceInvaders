@@ -101,7 +101,7 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    void Die(Vector3 bulletPosition)
+    public void Die(Vector3 bulletPosition)
     {
         if (!Dead)
         {
