@@ -1,0 +1,6 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <ui:Label tabindex="-1" text="Label" display-tooltip-when-elided="true" />
+    <ui:Button tabindex="-1" text="Button" display-tooltip-when-elided="true" />
+    <ui:Button tabindex="-1" text="Button" display-tooltip-when-elided="true" />
+    <ui:RadioButtonGroup label="Radio Button Group" value="-1" choices="UnityEngine.UIElements.RadioButtonGroup+&lt;get_choices&gt;d__7" />
+</ui:UXML>

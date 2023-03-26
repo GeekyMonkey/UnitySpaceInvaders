@@ -40,6 +40,7 @@ We will be making a Space Invaders clone with voxel graphics in Unity.
     * Get familiar with the different panels
     * From the top menu select: Window - Layouts - **2 by 3**
     * In the Scene Editor, rotate the scene so the green arrow is up, and the red arrow is to the right
+    * Window - Package Manager - Unity Registry - Search - 2D Sprite
 
 ### B: The Player
 1. Everything is a Prefab, and everything is grouped in Folders
@@ -52,6 +53,8 @@ We will be making a Space Invaders clone with voxel graphics in Unity.
    * Edit the Base Map color, then drag the material onto the quad
    * Exit the prefab editor.  Note that the player is not in the game window yet.
    * Drag the player prefab from the Project to the Heirarcy
+                  
+1. Player movement
    * Right-click in the Assets/Player folder and select Create - C# Script. Name it "MovePlayer"
    * Drag that script onto the *Player* prefab object
    * Double-click the script to open the code editor
@@ -62,7 +65,8 @@ We will be making a Space Invaders clone with voxel graphics in Unity.
         ~~~
    * Swtich back to the unity editor (code should auto-save)
    * Press the *Play* button  and try moving
-    
 
-
-
+1. Player sprite
+   * In the Assets, create a folder called **Sprites**
+   * Download the sprites image [here](https://github.com/GeekyMonkey/UnitySpaceInvaders/raw/master/ReferenceImages/Space%20Invaders%20Sprites.png) and save it into your Assets/Sprites folder
+   * Click on the image and in the *Inspector* change the *Texture Type* to **Sprite** and the *Sprite Mode* to **Multiple**, and change *Filter Mode* to **Point**
